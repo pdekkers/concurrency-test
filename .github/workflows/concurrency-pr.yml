@@ -1,0 +1,43 @@
+# no buid/test with this code, just evaluating the concurrency option
+
+name: Concurrency PR
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  #group: tests-on-pr-${{ github.head_ref }}
+  group: build-and-test
+  # cancel-in-progress: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-and-test-on-pr:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      #- name: Output HeadRef
+      #  run: echo "${{ github.head_ref }}"
+
+      - name: Build the code
+        run: |
+          echo "Starting Code Build"
+          sleep 2m
+          echo "Finish Code Build"
+
+      # Long Running Tests
+      - name: Test the code
+        run: |
+          echo "Starting Code Test"
+          sleep 2m
+          echo "Finish Code Test"
